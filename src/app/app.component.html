@@ -1,0 +1,93 @@
+<div class="bg-blue-500 text-white text-center align-center flex justify-center" role="banner">
+  <abds-icon icon="task-list-pen" size="5xl"></abds-icon>
+  <h1 class="self-center">Welcome to our Angular example app</h1>
+</div>
+
+<div class="flex flex-col items-center justify-center">
+  <section>
+    <h2>
+      Shopping list
+      <abds-badge palette="warning">Item count: {{ itemCount }}</abds-badge>
+    </h2>
+
+    <ul class="shoppingList"></ul>
+    <div class="flex gap-x-2 items-center justify-center mt-2">
+      <abds-button icon-start="subtract" (click)="resetItems()" palette="brand">Remove Completed</abds-button>
+      <abds-button icon-start="add" (click)="addItem()" palette="brand">Add Item</abds-button>
+    </div>
+  </section>
+  <section>
+    <form class="text-left">
+      <h2 class="text-center">
+        Favorite Food Form
+        <img alt="" class="inline" id="customIcon" src="https://img.icons8.com/office/30/000000/kawaii-taco.png" />
+        <abds-tooltip for="customIcon" open placement="right">It's TACO TUUUUESDAY!!!</abds-tooltip>
+      </h2>
+
+      <h3>Favorite Fruit</h3>
+      <abds-radio name="fruit" value="apple">Apple</abds-radio>
+      <abds-radio name="fruit" value="banana">Banana</abds-radio>
+      <abds-radio name="fruit" value="cherry">Cherry</abds-radio>
+
+      <h3>Favorite Vegetable</h3>
+      <abds-checkbox name="veggie" value="carrot">Carrot</abds-checkbox>
+      <abds-checkbox name="veggie" value="broccoli">Broccoli</abds-checkbox>
+      <abds-checkbox name="veggie" value="potato" tooltip="potatoe">Potato</abds-checkbox>
+
+      <h3>Dietary Restrictions</h3>
+      <abds-switch name="diet" value="vegan" tooltip="no meat">Vegan</abds-switch>
+      <abds-switch name="diet" value="glutenfree">Gluten Free</abds-switch>
+      <abds-switch name="diet" value="dairyfree">Dairy Free</abds-switch>
+
+      <abds-button class="block" type="submit">Submit</abds-button>
+    </form>
+  </section>
+  <section>
+    <h2 class="text-center">Toggle Playground</h2>
+
+    <span [class]="darkMode ? 'text-white bg-black' : ''">This sentence will change text and background color.</span>
+    <abds-switch (click)="setDarkMode()">Toggle style</abds-switch>
+  </section>
+  <section id="modal">
+    <abds-button class="fixed bottom-1 right-1" (click)="toggleModal()" appearance="outline" palette="destructive">
+      Important information
+    </abds-button>
+    <abds-modal header-text="Not important information" icon="information-circle" id="modal-1" palette="danger">
+      <p slot="modal-header">Modal header which shouldn't show</p>
+      <div slot="modal-body">
+        <ul>
+          <li>This is a sentence.</li>
+          <li>This is another sentence.</li>
+          <li>This is yet another sentence.</li>
+          <li>You guessed it, this is a sentence.</li>
+        </ul>
+        <ul>
+          <li>This is a sentence.</li>
+          <li>This is another sentence.</li>
+          <li>This is yet another sentence.</li>
+          <li>You guessed it, this is a sentence.</li>
+        </ul>
+        <ul>
+          <li>This is a sentence.</li>
+          <li>This is another sentence.</li>
+          <li>This is yet another sentence.</li>
+          <li>You guessed it, this is a sentence.</li>
+        </ul>
+        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Aliquid fugit hic tempora beatae nostrum et,
+        explicabo cumque libero laborum a sequi accusamus reprehenderit quisquam possimus, amet unde aspernatur,
+        temporibus vel. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Aliquid fugit hic tempora beatae
+        nostrum et, explicabo cumque libero laborum a sequi accusamus reprehenderit quisquam possimus, amet unde
+        aspernatur, temporibus vel.
+      </div>
+      <div slot="modal-footer">
+        <abds-button class="mr-1" appearance="outline" palette="neutral">
+          This button will not close modal
+        </abds-button>
+        <abds-button>
+          This one either
+        </abds-button>
+      </div>
+      <p>no slot specified</p>
+    </abds-modal>
+  </section>
+</div>
