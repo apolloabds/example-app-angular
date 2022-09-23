@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "@abds/components": "rc",
+    "@abds/components": "latest",
     "@angular/animations": "^12.2.0",
     "@angular/common": "^12.2.0",
     "@angular/compiler": "^12.2.0",

@@ -3,13 +3,7 @@
   <h1>Welcome to our Angular example app!</h1>
 </div>
 
-<div
-  [class]="
-    darkMode
-      ? 'bg-black flex flex-col gap-y-2 items-center justify-center text-white'
-      : 'flex flex-col gap-y-2 items-center justify-center'
-  "
->
+<div [ngClass]="{ 'flex flex-col gap-y-2 items-center justify-center': true, 'bg-black text-white': darkMode }">
   <section id="shopping-list">
     <h2>
       Shopping list
@@ -102,12 +96,10 @@
       <div class="flex gap-x-4">
         <abds-input name="street" pattern="\w+(\s\w+){2,}" required>Street</abds-input>
         <abds-input name="city" pattern="[A-Z|a-z|\s]+" required>City</abds-input>
-        <abds-select id="states" label="State" name="state" placeholder="Select a state" required>
-          <!--  Default options if  -->
-          <abds-select-option value="cali">California</abds-select-option>
-          <abds-select-option value="denver">Denver</abds-select-option>
-          <abds-select-option value="new york">New York</abds-select-option>
-          <abds-select-option value="tx">Texas</abds-select-option>
+        <abds-select *ngIf="states" id="states" label="State" name="state" placeholder="-- Select a state --" required>
+          <abds-select-option *ngFor="let state of states" value="{{ state.state_name.toLowerCase() }}">
+            {{ state.state_name.charAt(0).toUpperCase() }}{{ state.state_name.slice(1) }}
+          </abds-select-option>
         </abds-select>
       </div>
 
@@ -120,11 +112,11 @@
   </section>
 
   <section id="modal">
-    <abds-button appearance="outline" class="fixed bottom-1 right-1" (click)="toggleModal()" palette="destructive">
+    <abds-button (click)="toggleModal()" appearance="outline" class="bottom-1 fixed right-1" palette="destructive">
       Important information
     </abds-button>
-    <abds-modal header-text="Not important information" icon="information-circle" id="modal-1" palette="danger">
-      <p slot="modal-header">Modal header which shouldn't show</p>
+    <abds-modal #modal header-text="Not important information" icon="information-circle" ngModel palette="danger">
+      <p slot="modal-header">Modal header which shouldn&rsquo;t show</p>
       <div slot="modal-body">
         <ul>
           <li>This is a sentence.</li>

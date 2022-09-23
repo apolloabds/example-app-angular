@@ -1,13 +1,29 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/core';
+
+type State = {
+  state_name: string;
+};
 
 @Component({
   selector: 'app-root',
-  templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
+  templateUrl: './app.component.html',
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
+  constructor(private renderer: Renderer2) {}
+
+  @ViewChild('modal') modal!: ElementRef<HTMLElement>;
+
   darkMode = false;
+  isModalOpen = false;
   itemCount = 0;
+
+  states: State[] = [
+    { state_name: 'california' },
+    { state_name: 'denver' },
+    { state_name: 'new york' },
+    { state_name: 'texas' },
+  ];
 
   addItem = () => {
     const shoppingList = document.querySelector('.shoppingList');
@@ -37,8 +53,9 @@ export class AppComponent {
 
   fetchStates = async () => {
     const authorizationToken = await this.fetchAuthorizationToken();
+    const url = 'https://www.universal-tutorial.com/api/states/United States';
 
-    await fetch('https://www.universal-tutorial.com/api/states/United States', {
+    await fetch(url, {
       headers: new Headers({
         Accept: 'application/json',
         Authorization: `Bearer ${authorizationToken}`,
@@ -50,37 +67,9 @@ export class AppComponent {
     })
       .then((response) => response.json())
       .then((states) => {
-        const abdsSelect = document.querySelector('abds-select#states');
-
-        const hiddenSelect = abdsSelect?.querySelector('select')!;
-        const hiddenSelectOptions = hiddenSelect?.querySelectorAll('option') as unknown as Node[];
-        const hiddenSelectPlaceholder = Array.from(hiddenSelectOptions).filter((option) =>
-          (option as Element).classList.contains('placeholder')
-        )[0];
-
-        if (abdsSelect) abdsSelect.innerHTML = '';
-
-        abdsSelect?.appendChild(hiddenSelect);
-
-        if (hiddenSelect) hiddenSelect.innerHTML = '';
-
-        hiddenSelect?.appendChild(hiddenSelectPlaceholder);
-
-        states.forEach(({ state_name: state }: { state_name: string }) => {
-          const option = document.createElement('option');
-          const abdsOption = document.createElement('abds-select-option');
-
-          abdsOption.innerText = state;
-          abdsOption.setAttribute('value', state);
-
-          option.innerText = state;
-          option.setAttribute('value', state);
-
-          abdsSelect?.appendChild(abdsOption);
-          hiddenSelect?.appendChild(option);
-        });
+        this.states = states;
       })
-      .catch((error) => console.error('error', error));
+      .catch((error) => console.error(`Failed to fetch: ${url}: ${error}`));
   };
 
   resetItems = () => {
@@ -102,10 +91,8 @@ export class AppComponent {
   };
 
   toggleModal = () => {
-    const modalElement: HTMLAbdsModalElement | null = document.querySelector('#modal-1');
-    const currentState = modalElement?.open;
-
-    modalElement?.setAttribute('open', `${!currentState}`);
+    this.isModalOpen = !this.isModalOpen;
+    this.renderer.setAttribute(this.modal.nativeElement, 'open', `${this.isModalOpen ? true : null}`);
   };
 
   ngOnInit() {
