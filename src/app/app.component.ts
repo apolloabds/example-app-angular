@@ -17,6 +17,9 @@ export class AppComponent implements OnInit {
   darkMode = false;
   isModalOpen = false;
   itemCount = 0;
+  initialColors =
+    'Red White Cyan Silver Blue Gray DarkBlue Black LightBlue Orange Purple Brown Yellow Maroon Lime Green Magenta Olive Pink Aquamarine';
+  colorSearchResults = this.initialColors;
 
   states: State[] = [
     { state_name: 'california' },
@@ -70,6 +73,14 @@ export class AppComponent implements OnInit {
         this.states = states;
       })
       .catch((error) => console.error(`Failed to fetch: ${url}: ${error}`));
+  };
+
+  onAbdsInput = (event: Event) => {
+    const results = this.initialColors
+      .split(' ')
+      .filter((color) => color.toLowerCase().includes((event?.target as HTMLAbdsInputElement).value.toLowerCase()));
+
+    this.colorSearchResults = results.length ? results.join(' ') : 'No results. Do you know your colors?';
   };
 
   resetItems = () => {

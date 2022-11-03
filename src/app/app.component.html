@@ -90,22 +90,54 @@
         >
           First Name
         </abds-input>
-        <abds-input name="last-name" pattern="[A-Z|a-z]+" required>Last Name</abds-input>
+        <abds-input name="last-name" pattern="[A-Z|a-z]+">Last Name</abds-input>
       </div>
 
       <div class="flex gap-x-4">
-        <abds-input name="street" pattern="\w+(\s\w+){2,}" required>Street</abds-input>
-        <abds-input name="city" pattern="[A-Z|a-z|\s]+" required>City</abds-input>
+        <abds-input name="street" pattern="\w+(\s\w+){2,}">Street</abds-input>
+        <abds-input name="city" pattern="[A-Z|a-z|\s]+">City</abds-input>
         <abds-select *ngIf="states" id="states" label="State" name="state" placeholder="-- Select a state --" required>
           <abds-select-option *ngFor="let state of states" value="{{ state.state_name.toLowerCase() }}">
             {{ state.state_name.charAt(0).toUpperCase() }}{{ state.state_name.slice(1) }}
           </abds-select-option>
         </abds-select>
+        <abds-input name="trips" type="number" value="1" max="7" min="0">Weekly Grocery Trips</abds-input>
       </div>
 
       <abds-button type="submit">Submit</abds-button>
     </form>
   </section>
+
+  <section>
+    <h2>Change Password</h2>
+    <form class="flex gap-x-4 mt-4">
+      <abds-input name="oldPassword" required autocomplete="off" type="password">Old Password</abds-input>
+      <abds-input
+        autocomplete="off"
+        helper-text="Must include any 8 characters"
+        name="newPassword"
+        pattern-message="Enter at least 8 characters"
+        pattern="[a-zA-Z0-9]{8,}"
+        required
+        type="password"
+      >
+        New Password
+      </abds-input>
+      <abds-button-icon appearance="solid" class="self-center" icon="arrow-right" palette="brand"></abds-button-icon>
+    </form>
+  </section>
+
+  <section>
+    <h2>Color search</h2>
+    <form class="flex gap-x-4 mt-4">
+      <abds-input name="color" type="search" id="color-search-input" (abdsInput)="onAbdsInput($event)">
+        Type to search for a color
+      </abds-input>
+      <abds-button-icon appearance="solid" class="self-end" icon="arrow-right" palette="brand"></abds-button-icon>
+    </form>
+  </section>
+
+  <p class="max-w-md" id="color-search-text">{{ colorSearchResults }}</p>
 
   <section class="flex gap-x-4" id="toggle-playground">
     <abds-switch (click)="setDarkMode()">Toggle text and background color</abds-switch>
